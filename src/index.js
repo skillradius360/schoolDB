@@ -8,7 +8,7 @@ dotenv.config({
 
 initializeDatabase().then(()=>{
     console.log("connection success and running at port 3306")
-    app.listen(8000,(err)=>{
+    app.listen(process.env.PORT8000,(err)=>{
         console.log("express listening on port 8000")
     })
 })
