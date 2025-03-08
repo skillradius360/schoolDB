@@ -12,7 +12,7 @@ https://your-api-url.com/school
 - **Description:** Checks if the server is running.
 - **Example Request:**
   ```bash
-  curl -X GET https://your-api-url.com/school/
+  curl -X GET https://schooldb-kzfe.onrender.com/school/
   ```
 - **Response:**
   ```json
@@ -28,7 +28,7 @@ https://your-api-url.com/school
 - **Description:** Retrieves a list of all registered schools.
 - **Example Request:**
   ```bash
-  curl -X GET https://your-api-url.com/school/getAllSchools
+  curl -X GET https://schooldb-kzfe.onrender.com/school/getAllSchools
   ```
 - **Response:**
   ```json
@@ -60,7 +60,7 @@ https://your-api-url.com/school
   ```
 - **Example Request:**
   ```bash
-  curl -X POST https://your-api-url.com/school/addSchool \
+  curl -X POST https://schooldb-kzfe.onrender.com/school/addSchool 
        -H "Content-Type: application/json" \
        -d '{"name": "XYZ Academy", "address": "456 Main Road, City", "latitude": 40.7306, "longitude": -73.9352}'
   ```
