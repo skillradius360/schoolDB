@@ -17,9 +17,7 @@ async function initializeDatabase() {
       port: process.env.DB_PORT || 3306,
       user: process.env.DB_USER || "root",
       password: process.env.DB_PASS || "admin",
-      ssl: {
-        rejectUnauthorized: false, // ✅ Fixes self-signed certificate issue
-      },
+      ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : null, // ✅ Fixes self-signed certificate issue
     });
 
     console.log(`📌 Checking if database '${dbName}' exists...`);
@@ -36,13 +34,26 @@ async function initializeDatabase() {
       waitForConnections: true,
       connectionLimit: 10,
       queueLimit: 0,
-      ssl: {
-        rejectUnauthorized: false, // ✅ Fixes self-signed certificate issue
-      },
+      ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : null, // ✅ Apply SSL if enabled
     });
 
     console.log(`✅ Successfully connected to MySQL database: ${dbName}`);
-    return pool;
+
+    // ✅ Create schools table if it does not exist
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS schools (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        address VARCHAR(255) NOT NULL,
+        latitude FLOAT NOT NULL,
+        longitude FLOAT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    console.log("✅ Schools table is ready!");
+
+    return pool; 
   } catch (error) {
     console.error("❌ Database initialization failed:", error.message);
     throw error;
